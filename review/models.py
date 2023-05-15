@@ -16,6 +16,8 @@ class Ticket(models.Model):
     def user_resume(self):
         return f"{self.user.username} <{self.user.email}>"
 
+    user_resume.short_description = "User"
+
     # def get_absolute_url(self):
     # return reverse("model-detail-view", args=[str(self.id)])
 
