@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+    <title>{{title}} - LitReview</title>
+{% endblock%}
+
+{% block content %}
+    <h1>{{title}}</h1>
+    {% if object_list %}
+    <ul>
+        {% for post in object_list %}
+            {% if post.content_type == "REVIEW" %} 
+            <li>
+                {{post.headline}}
+            </li>
+            {% elif post.content_type == "TICKET" %}
+            <li>
+                {{post.title}}
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>Il n'y a pas de critique à afficher.</p>
+    {% endif %}
+{% endblock%}
+

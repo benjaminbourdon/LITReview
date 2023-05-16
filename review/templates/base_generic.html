@@ -9,7 +9,12 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    {% block header %}<!-- insert default navigation text for every page -->{% endblock %}
+    {% block header %}
+    <nav>
+        <li><a href="{% url 'my_posts' %}">Posts</a></li>
+        <li><a href="{% url 'linked_users' %}">Abonnements</a></li>
+    </nav>
+    {% endblock %}
     {% block content %}<!-- default content text (typically empty) -->{% endblock %}
 </body>
 </html>

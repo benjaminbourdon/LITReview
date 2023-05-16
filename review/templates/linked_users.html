@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+    <title>Mes abonnements - LitReview</title>
+{% endblock%}
+
+{% block content %}
+<h2>
+    Abonnements de {{user}}
+</h2>
+
+    {% if following %}
+    <ul>
+        {% for user in following %}
+            <li>
+                {{user}}
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>Vous ne suivez pas d'utilisateurs pour le moment.</p>
+    {% endif %}
+
+<h2>
+    Abonnés
+</h2>
+    {% if followed_by %}
+    <ul>
+        {% for user in followed_by %}
+            <li>
+                {{user.get_full_name}}
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>Aucun utilisateurs ne vous suit pour le moment.</p>
+    {% endif %}
+
+{% endblock %}
