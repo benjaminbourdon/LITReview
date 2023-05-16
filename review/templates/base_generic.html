@@ -10,9 +10,11 @@
 </head>
 <body>
     {% block header %}
+    <h1>LitReview</h1>
     <nav>
         <li><a href="{% url 'my_posts' %}">Posts</a></li>
         <li><a href="{% url 'linked_users' %}">Abonnements</a></li>
+        <li><a href="{% url 'logout' %}?next={{ request.path }}">Déconnexion ({{user}})</a></li>
     </nav>
     {% endblock %}
     {% block content %}<!-- default content text (typically empty) -->{% endblock %}

@@ -5,10 +5,16 @@
 {% endblock%}
 
 {% block content %}
-<h2>
-    Abonnements de {{user}}
-</h2>
+<h2>Suivre d'autres utilisateurs</h2>
+<form action="" method="post">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Envoyer">
+</form>
 
+<h2>Abonnements</h2>
     {% if following %}
     <ul>
         {% for user in following %}
@@ -21,9 +27,7 @@
         <p>Vous ne suivez pas d'utilisateurs pour le moment.</p>
     {% endif %}
 
-<h2>
-    Abonnés
-</h2>
+<h2>Abonnés</h2>
     {% if followed_by %}
     <ul>
         {% for user in followed_by %}

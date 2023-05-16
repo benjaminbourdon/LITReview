@@ -5,11 +5,14 @@ from django.db.models import CharField, Value
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-from review.models import Review, Ticket
+from review.models import Review, Ticket, UserFollows
+from review.forms import FollowsUserForm
 
 
-class OwnPostsListView(generic.ListView):
+class OwnPostsListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "my_posts"
     template_name = "list_posts.html"
 
@@ -32,8 +35,19 @@ class OwnPostsListView(generic.ListView):
         return context
 
 
+@login_required
 def linked_users_view(request):
     current_user = request.user
+
+    if request.method == "POST":
+        form = FollowsUserForm(request.POST, user=current_user)
+        if form.is_valid():
+            new_following = UserFollows(
+                user=current_user, followed_user=form.cleaned_data["user_to_follow"]
+            )
+            new_following.save()
+    else:
+        form = FollowsUserForm(user=current_user)
 
     query_following = current_user.following.select_related("followed_user").all()
     following = [pair.followed_user for pair in query_following]
@@ -45,6 +59,7 @@ def linked_users_view(request):
         request,
         "linked_users.html",
         context={
+            "form": form,
             "following": following,
             "followed_by": followed_by,
         },
