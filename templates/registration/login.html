@@ -1,4 +1,17 @@
 {% block content %}
+
+{% if form.errors %}
+    <p>Votre identifiant et votre mot de passe ne correspondent pas. Veuillez réessayer.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+        <p>Vous n'avez pas accès à cette page.</p>
+    {% else %}
+        <p>Merci de vous connecter pour voir cette page.</p>
+    {% endif %}
+{% endif %}
+
 <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <table>

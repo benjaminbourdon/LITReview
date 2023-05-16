@@ -1,0 +1,6 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <p>Déconnexion</p>
+  <a href="{% url 'login'%}?next={{ request.path }}">Me reconnecter.</a>
+{% endblock %}
