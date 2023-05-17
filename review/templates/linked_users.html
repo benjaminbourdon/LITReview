@@ -19,7 +19,8 @@
     <ul>
         {% for user in following %}
             <li>
-                {{user}}
+                {{user}} 
+                <a href="{% url 'unfollow' id=user.id %}">Se désabonner</a>
             </li>
         {% endfor %}
     </ul>
@@ -32,7 +33,7 @@
     <ul>
         {% for user in followed_by %}
             <li>
-                {{user.get_full_name}}
+                {{user.get_full_name}} 
             </li>
         {% endfor %}
     </ul>

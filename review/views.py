@@ -1,12 +1,14 @@
 from itertools import chain
 from typing import Any, Dict
 
-from django.db.models import CharField, Value
+from django.db.models import CharField, Value, Model
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy, reverse
 
 from review.models import Review, Ticket, UserFollows
 from review.forms import FollowsUserForm
@@ -46,6 +48,7 @@ def linked_users_view(request):
                 user=current_user, followed_user=form.cleaned_data["user_to_follow"]
             )
             new_following.save()
+            return HttpResponseRedirect("")
     else:
         form = FollowsUserForm(user=current_user)
 
@@ -64,3 +67,44 @@ def linked_users_view(request):
             "followed_by": followed_by,
         },
     )
+
+
+@login_required
+def unfollow_user(request, id):
+    try:
+        userfollows = UserFollows.objects.get(user=request.user, followed_user__id=id)
+    except Model.DoesNotExist:
+        pass
+    else:
+        userfollows.delete()
+    finally:
+        return HttpResponseRedirect(reverse("linked_users"))
+
+
+class TicketCreate(LoginRequiredMixin, generic.edit.CreateView):
+    model = Ticket
+    fields = ["title", "description"]
+    success_url = reverse_lazy("my_posts")
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class TicketUpdate(LoginRequiredMixin, UserPassesTestMixin, generic.edit.UpdateView):
+    model = Ticket
+    fields = ["title", "description"]
+    success_url = reverse_lazy("my_posts")
+
+    def test_func(self):
+        # Vérifie que l'utilisateur connecté est bien l'auteur du ticket à modifier
+        return self.get_object().user == self.request.user
+
+
+# class TicketDelete(LoginRequiredMixin, UserPassesTestMixin, generic.edit.DeleteView):
+#     model = Ticket
+#     success_url = reverse_lazy("my_posts")
+
+#     def test_func(self):
+#         # Vérifie que l'utilisateur connecté est bien l'auteur du ticket à supprimer
+#         return self.get_object().user == self.request.user
