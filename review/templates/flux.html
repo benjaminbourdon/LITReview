@@ -1,0 +1,37 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+    <title>{{title}} - LitReview</title>
+{% endblock%}
+
+{% block content %}
+    <h2>{{title}}</h2>
+
+    <p>
+        <a href="{% url 'add_ticket' %}">Demander une critique</a>
+        <a href="{% url 'fresh_review' %}">Créer une critique</a>
+    </p>
+
+    {% if object_list %}
+    <ul>
+        {% for post in object_list %}
+            {% if post.content_type == "REVIEW" %} 
+            <li>
+                Critique : {{post.headline}} par {{post.user}}, critique de {{post.ticket.title}}
+            </li>
+
+            {% elif post.content_type == "TICKET" %}
+            <li>
+                Ticket : {{post.title}} par {{post.user}}
+                {% if post.review__count == 0 %}
+                    <a href="{% url 'review_for_ticket' ticket_id=post.id %}">Ajouter une critique</a>
+                {% endif %}
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>Les personnes que vous suivez n'ont rien publié pour l'instant.</p>
+    {% endif %}
+{% endblock%}
+

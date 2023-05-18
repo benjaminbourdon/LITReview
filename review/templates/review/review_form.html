@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+    <title>{{title}}- LitReview</title>
+{% endblock%}
+
+{% block content %}
+<h2>{{title}}</h2>
+
+<form action="" method="post">
+
+{% if ticket %}
+    <p>Vous répondez au ticket {{ticket}}</p>
+{% elif ticket_form %}
+    <table>
+        {{ ticket_form.as_table }}
+    </table>
+{% endif %}
+
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Envoyer">
+</form>
+
+{% endblock%}

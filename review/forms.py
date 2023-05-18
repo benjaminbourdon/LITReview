@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
+from review.models import Ticket
+
 
 class FollowsUserForm(forms.Form):
     user_to_follow = forms.ModelChoiceField(
@@ -20,3 +22,9 @@ class FollowsUserForm(forms.Form):
         queryset = User.objects.exclude(id__in=already_follow).exclude(id=self.user.id)
 
         self.fields["user_to_follow"].queryset = queryset
+
+
+class TicketCreateForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ["title", "description"]
