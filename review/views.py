@@ -52,7 +52,7 @@ class OwnPostsListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "my_posts"
     template_name = "list_posts.html"
 
-    title = "Mes posts"
+    title = "Vos posts"
 
     def get_queryset(self) -> list[Ticket | Review]:
         reviews = Review.objects.filter(user=self.request.user)
@@ -122,9 +122,16 @@ class TicketCreate(LoginRequiredMixin, generic.edit.CreateView):
     fields = ["title", "description"]
     success_url = reverse_lazy("my_posts")
 
+    title = "Créer un ticket"
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["title"] = self.title
+        return context
 
 
 class TicketUpdate(LoginRequiredMixin, UserPassesTestMixin, generic.edit.UpdateView):
@@ -132,18 +139,29 @@ class TicketUpdate(LoginRequiredMixin, UserPassesTestMixin, generic.edit.UpdateV
     fields = ["title", "description"]
     success_url = reverse_lazy("my_posts")
 
+    title = "Modifier votre ticket"
+
     def test_func(self):
         # Vérifie que l'utilisateur connecté est bien l'auteur du ticket à modifier
         return self.get_object().user == self.request.user
 
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["title"] = self.title
+        return context
 
-# class TicketDelete(LoginRequiredMixin, UserPassesTestMixin, generic.edit.DeleteView):
-#     model = Ticket
-#     success_url = reverse_lazy("my_posts")
 
-#     def test_func(self):
-#         # Vérifie que l'utilisateur connecté est bien l'auteur du ticket à supprimer
-#         return self.get_object().user == self.request.user
+@login_required
+def delete_ticket(request, pk: int):
+    try:
+        ticket = Ticket.objects.get(id=pk)
+    except Model.DoesNotExist:
+        pass
+    else:
+        if ticket.user == request.user:
+            ticket.delete()
+    finally:
+        return HttpResponseRedirect(reverse("my_posts"))
 
 
 class ReviewCreateFromTicket(
@@ -194,17 +212,54 @@ class ReviewCreateWithNewTicket(LoginRequiredMixin, generic.edit.CreateView):
 
     title = "Créer une critique"
 
+    @cached_property
+    def ticket_form(self):
+        ticket_form = TicketCreateForm(self.request.POST)
+        ticket_form.instance.user = self.request.user
+        return ticket_form
+
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["ticket_form"] = TicketCreateForm(self.request.POST)
+        context["ticket_form"] = self.ticket_form
+        context["title"] = self.title
         return context
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        ticket_form = TicketCreateForm(self.request.POST)
-        ticket_form.instance.user = self.request.user
-        if ticket_form.is_valid():
-            new_ticket = ticket_form.save()
+        if self.ticket_form.is_valid():
+            new_ticket = self.ticket_form.save()
 
-        form.instance.ticket = new_ticket
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+            form.instance.ticket = new_ticket
+            form.instance.user = self.request.user
+            return super().form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+
+class ReviewUpdate(LoginRequiredMixin, UserPassesTestMixin, generic.edit.UpdateView):
+    model = Review
+    fields = ["headline", "body", "rating"]
+    success_url = reverse_lazy("my_posts")
+
+    title = "Modifier votre critique"
+
+    def test_func(self):
+        # Vérifie que l'utilisateur connecté est bien l'auteur de la critique à modifier
+        return self.get_object().user == self.request.user
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["title"] = self.title
+        return context
+
+
+@login_required
+def delete_review(request, pk: int):
+    try:
+        review = Review.objects.get(id=pk)
+    except Model.DoesNotExist:
+        pass
+    else:
+        if review.user == request.user:
+            review.delete()
+    finally:
+        return HttpResponseRedirect(reverse("my_posts"))

@@ -11,12 +11,14 @@
 <body>
     {% block header %}
     <h1>LitReview</h1>
+    {% if user.is_authenticated %}
     <nav>
         <li><a href="{% url 'flux' %}">Flux</a></li>
         <li><a href="{% url 'my_posts' %}">Posts</a></li>
         <li><a href="{% url 'linked_users' %}">Abonnements</a></li>
         <li><a href="{% url 'logout' %}?next={{ request.path }}">Se déconnecter ({{user}})</a></li>
     </nav>
+    {% endif %}
     {% endblock %}
     {% block content %}<!-- default content text (typically empty) -->{% endblock %}
 </body>

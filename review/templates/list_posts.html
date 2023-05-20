@@ -11,11 +11,15 @@
         {% for post in object_list %}
             {% if post.content_type == "REVIEW" %} 
             <li>
-                {{post.headline}}
+                Critique : {{post.headline}}
+                <a href="{% url 'modify_review' pk=post.id %}">Modifier</a>
+                <a href="{% url 'delete_review' pk=post.id %}">Supprimer</a>
             </li>
             {% elif post.content_type == "TICKET" %}
             <li>
-                {{post.title}}
+                Ticket: {{post.title}} 
+                <a href="{% url 'modify_ticket' pk=post.id %}">Modifier</a>
+                <a href="{% url 'delete_ticket' pk=post.id %}">Supprimer</a>
             </li>
             {% endif %}
         {% endfor %}

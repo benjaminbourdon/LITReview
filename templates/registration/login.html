@@ -1,5 +1,10 @@
-{% block content %}
+{% extends "base_generic.html" %}
 
+{% block content %}
+<h2>Inscrivez-vous maintenant</h2>
+<a href="{% url 'signup' %}">S'inscrire</a>
+
+<h2>Connectez-vous</h2>
 {% if form.errors %}
     <p>Votre identifiant et votre mot de passe ne correspondent pas. Veuillez réessayer.</p>
 {% endif %}
@@ -24,7 +29,7 @@
             <td>{{ form.password }}</td>
         </tr>
     </table>
-    <input type="submit" value="login">
+    <input type="submit" value="Se connecter">
     <input type="hidden" name="next" value="{{ next }}">
 </form>
 {% endblock %}

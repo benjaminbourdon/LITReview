@@ -8,12 +8,13 @@ urlpatterns = [
     path("abonnements/<int:id>/unfollow", views.unfollow_user, name="unfollow"),
     path("tickets", views.TicketCreate.as_view(), name="add_ticket"),
     path("tickets/<int:pk>/edit", views.TicketUpdate.as_view(), name="modify_ticket"),
-    # path("tickets/<int:pk>/supprimer", views., name="delete_ticket"),
+    path("tickets/<int:pk>/supprimer", views.delete_ticket, name="delete_ticket"),
     path(
         "tickets/<int:ticket_id>/critique",
         views.ReviewCreateFromTicket.as_view(),
         name="review_for_ticket",
     ),
     path("critiques", views.ReviewCreateWithNewTicket.as_view(), name="fresh_review"),
-    # path("critiques/<int:pk>/edit", views., name="modify_review"),
+    path("critiques/<int:pk>/edit", views.ReviewUpdate.as_view(), name="modify_review"),
+    path("critiques/<int:pk>/supprimer", views.delete_review, name="delete_review"),
 ]
