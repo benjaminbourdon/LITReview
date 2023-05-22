@@ -2,7 +2,7 @@ from itertools import chain
 from typing import Any, Dict
 from functools import cached_property
 
-from django.db.models import CharField, Value, Model, Count
+from django.db.models import CharField, Value, Model, Count, Q
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.http.response import HttpResponseRedirect
@@ -27,12 +27,16 @@ class FollowedPostsListView(LoginRequiredMixin, generic.ListView):
 
         query_following = current_user.following.select_related("followed_user").all()
         following = [pair.followed_user for pair in query_following]
-        following.append(current_user)
 
-        reviews = Review.objects.filter(user__in=following)
+        # Critique d'une personne suivi, de l'utilisateur connecté
+        # ou en réponse à un de ses tickets
+        reviews = Review.objects.filter(
+            Q(user__in=following) | Q(user=current_user) | Q(ticket__user=current_user)
+        )
         reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
 
-        tickets = Ticket.objects.filter(user__in=following)
+        # Tickets d'une personne suivi ou de l'utilisateur connecté
+        tickets = Ticket.objects.filter(Q(user__in=following) | Q(user=current_user))
         tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
         tickets = tickets.annotate(Count("review"))
 
