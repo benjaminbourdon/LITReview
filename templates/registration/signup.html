@@ -1,15 +1,18 @@
 {% extends "base_generic.html" %}
 
-{% block title %}<title>Inscription - LIT Reriew</title>{% endblock%}
-
 {% block content %}
+<h2>Inscrivew-vous</h2>
 
-<h2>Inscription</h2>
+{% if form.errors %}
+    <p class="alert">Les éléments entrés ne sont pas valables. Veuillez réessayer.</p>
+{% endif %}
+
 <form method="post" action="">
     {% csrf_token %}
     <table>
         {{form.as_table}}
     </table>
+    <a href="">Retourner</a>
     <input type="submit" value="S'inscrire">
 </form>
 {% endblock %}

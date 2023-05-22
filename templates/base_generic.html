@@ -4,22 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
-    {% block title %}<title>LIT Reriew</title>{% endblock%}
+    {% block title %}
+        <title>
+            {% if title %}{{title}} - {% endif %}
+            LiTReriew
+        </title>
+    {% endblock%}
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     {% block header %}
-    <h1>LitReview</h1>
-    {% if user.is_authenticated %}
-    <nav>
-        <li><a href="{% url 'flux' %}">Flux</a></li>
-        <li><a href="{% url 'my_posts' %}">Posts</a></li>
-        <li><a href="{% url 'linked_users' %}">Abonnements</a></li>
-        <li><a href="{% url 'logout' %}?next={{ request.path }}">Se déconnecter ({{user}})</a></li>
-    </nav>
-    {% endif %}
+    <header>
+        <h1>LiTReview</h1>
+        {% if user.is_authenticated %}
+        <nav>
+            <li><a href="{% url 'flux' %}">Flux</a></li>
+            <li><a href="{% url 'my_posts' %}">Posts</a></li>
+            <li><a href="{% url 'linked_users' %}">Abonnements</a></li>
+            <li><a href="{% url 'logout' %}?next={{ request.path }}">Se déconnecter</a></li>
+        </nav>
+        {% endif %}
+    </header>
     {% endblock %}
-    {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+    
+    <main>
+        {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+    </main>
 </body>
 </html>

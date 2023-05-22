@@ -6,14 +6,14 @@
 
 <h2>Connectez-vous</h2>
 {% if form.errors %}
-    <p>Votre identifiant et votre mot de passe ne correspondent pas. Veuillez réessayer.</p>
+    <p class="alert">Votre identifiant et votre mot de passe ne correspondent pas. Veuillez réessayer.</p>
 {% endif %}
 
 {% if next %}
     {% if user.is_authenticated %}
-        <p>Vous n'avez pas accès à cette page.</p>
+        <p class="alert">Vous n'avez pas accès à cette page.</p>
     {% else %}
-        <p>Merci de vous connecter pour voir cette page.</p>
+        <p class="alert">Merci de vous connecter pour voir cette page.</p>
     {% endif %}
 {% endif %}
 

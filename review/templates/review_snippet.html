@@ -1,0 +1,32 @@
+<article class="review">
+    <header>
+        <span class="post__author">
+            {% if post.user == user %} Vous avez publié une critique
+            {% else %} {{post.user}} a publié une critique
+            {% endif %}
+        </span>
+        <span class="post__date">
+            {{ post.time_created|date:"G:i d F Y" }}
+        </span>
+    </header>
+    <h1 class="post__title">{{post.headline}}</h1>
+    <span class="post__rating">
+        {% for i in "12345" %}
+            {% if post.rating >= forloop.counter %} +
+            {% else %} -
+            {% endif %}
+        {% endfor %}
+    </span>
+    <p class="post__body">
+        {{post.body}}
+    </p>
+    <div class="ticket">
+        <p>Ticket - 
+            {% if post.user == user %} Vous
+            {% else %} {{post.user}}
+            {% endif %}
+        </p>
+        <h1>{{post.ticket.title}}</h1>
+    </div>
+</article>
+    
