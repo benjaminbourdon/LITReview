@@ -15,14 +15,16 @@
 </head>
 <body>
     {% block header %}
-    <header>
+    <header class="body__header">
         <h1>LiTReview</h1>
         {% if user.is_authenticated %}
         <nav>
-            <li><a href="{% url 'flux' %}">Flux</a></li>
-            <li><a href="{% url 'my_posts' %}">Posts</a></li>
-            <li><a href="{% url 'linked_users' %}">Abonnements</a></li>
-            <li><a href="{% url 'logout' %}?next={{ request.path }}">Se déconnecter</a></li>
+            <ul>
+                <li><a href="{% url 'flux' %}">Flux</a></li>
+                <li><a href="{% url 'my_posts' %}">Posts</a></li>
+                <li><a href="{% url 'linked_users' %}">Abonnements</a></li>
+                <li><a href="{% url 'logout' %}?next={{ request.path }}">Se déconnecter</a></li>
+            </ul>
         </nav>
         {% endif %}
     </header>

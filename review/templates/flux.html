@@ -5,7 +5,7 @@
 {% endblock%}
 
 {% block content %}
-    <section>
+    <section class="links-section">
         <div class="link-button">
             <a href="{% url 'add_ticket' %}">Demander une critique</a>
         </div>
@@ -14,18 +14,13 @@
         </div>
     </section>
 
-    <section>
+    <section class="list_posts">
         {% if object_list %}
             {% for post in object_list %}
                 {% if post.content_type == "REVIEW" %} 
-                    {% include "review_snippet.html" %}
+                    {% include "review_snippet.html" with edit=False %}
                 {% elif post.content_type == "TICKET" %}
-                <li>
-                    Ticket : {{post.title}} par {{post.user}}
-                    {% if post.review__count == 0 %}
-                    <a href="{% url 'review_for_ticket' ticket_id=post.id %}">Ajouter une critique</a>
-                    {% endif %}
-                </li>
+                    {% include "ticket_snippet.html" with edit=False  %}
                 {% endif %}
             {% endfor %}
         {% else %}

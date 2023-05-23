@@ -1,35 +1,41 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h2>Inscrivez-vous maintenant</h2>
-<a href="{% url 'signup' %}">S'inscrire</a>
+<div class="col-2">
+    <div>
+        <h2>Inscrivez-vous maintenant</h2>
+        <a href="{% url 'signup' %}" class="link-button">S'inscrire</a>
+    </div>
 
-<h2>Connectez-vous</h2>
-{% if form.errors %}
-    <p class="alert">Votre identifiant et votre mot de passe ne correspondent pas. Veuillez réessayer.</p>
-{% endif %}
-
-{% if next %}
-    {% if user.is_authenticated %}
+    <div>  
+        <h2>Connectez-vous</h2>
+        {% if form.errors %}
+        <p class="alert">Votre identifiant et votre mot de passe ne correspondent pas. Veuillez réessayer.</p>
+        {% endif %}
+        
+        {% if next %}
+        {% if user.is_authenticated %}
         <p class="alert">Vous n'avez pas accès à cette page.</p>
-    {% else %}
+        {% else %}
         <p class="alert">Merci de vous connecter pour voir cette page.</p>
-    {% endif %}
-{% endif %}
-
-<form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-        <tr>
-            <td>{{ form.username.label_tag }}</td>
-            <td>{{ form.username }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.password.label_tag }}</td>
-            <td>{{ form.password }}</td>
-        </tr>
-    </table>
-    <input type="submit" value="Se connecter">
-    <input type="hidden" name="next" value="{{ next }}">
-</form>
+        {% endif %}
+        {% endif %}
+        
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>{{ form.username.label_tag }}</td>
+                    <td>{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.password.label_tag }}</td>
+                    <td>{{ form.password }}</td>
+                </tr>
+            </table>
+            <input type="submit" value="Se connecter"  class="link-button">
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+    </div> 
+</div>
 {% endblock %}

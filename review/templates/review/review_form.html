@@ -7,21 +7,28 @@
 {% block content %}
 <h2>{{title}}</h2>
 
-<form action="" method="post">
+<form action="" method="post" class="block-form">
 
-{% if ticket %}
-    <p>Vous répondez au ticket {{ticket}}</p>
-{% elif ticket_form %}
-    <table>
-        {{ ticket_form.as_table }}
-    </table>
-{% endif %}
+    {% if ticket %}
+    <div class="form__header">
+        <p>Vous êtes en train de poster en réponse à</p>
+        {% include "ticket_snippet.html" with post=ticket edit=False %}
+    </div>
+    {% elif ticket_form %}
+    <div>
+        {{ ticket_form.as_div }}
+    </div>
+    {% endif %}
 
     {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <input type="submit" value="Envoyer">
+    
+    <h3>Critique</h3> 
+    <div class="form__body">
+        {{ form.as_div }}
+    </div>
+    <div class="form__footer">
+        <input type="submit" value="Envoyer" class="link-button">
+    </div>
 </form>
 
 {% endblock%}

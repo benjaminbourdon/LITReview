@@ -1,5 +1,5 @@
-<article class="review">
-    <header>
+<article class="post review">
+    <header class="post__info">
         <span class="post__author">
             {% if post.user == user %} Vous avez publié une critique
             {% else %} {{post.user}} a publié une critique
@@ -10,23 +10,30 @@
         </span>
     </header>
     <h1 class="post__title">{{post.headline}}</h1>
+    -
     <span class="post__rating">
         {% for i in "12345" %}
-            {% if post.rating >= forloop.counter %} +
-            {% else %} -
+            {% if post.rating >= forloop.counter %} ★
+            {% else %} ☆
             {% endif %}
         {% endfor %}
     </span>
     <p class="post__body">
         {{post.body}}
     </p>
-    <div class="ticket">
-        <p>Ticket - 
+    <div class="post ticket">
+        <p class ="post__info">Ticket - 
             {% if post.user == user %} Vous
             {% else %} {{post.user}}
             {% endif %}
         </p>
         <h1>{{post.ticket.title}}</h1>
     </div>
+    {% if edit %}
+        <p class="post__footer">
+            <a href="{% url 'modify_review' pk=post.id %}" class="link-button">Modifier</a>
+            <a href="{% url 'delete_review' pk=post.id %}" class="link-button">Supprimer</a>
+        </p>
+    {% endif %}
 </article>
     

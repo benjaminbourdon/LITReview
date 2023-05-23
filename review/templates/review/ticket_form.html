@@ -6,11 +6,20 @@
 
 {% block content %}
 <h2>{{title}}</h2>
-<form action="" method="post">
+
+{% if form.is_multipart %}
+<form enctype="multipart/form-data" method="post" action="" class="block-form">
+{% else %}
+<form method="post" action="">
+{% endif %}
+
     {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <input type="submit" value="Envoyer">
+    <div class="form__body">
+        {{ form.as_div }}
+    </div>
+
+    <div class="form__footer">
+        <input type="submit" value="Envoyer" class="link-button">
+    </div>
 </form>
 {% endblock%}

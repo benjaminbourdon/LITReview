@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h2>Inscrivew-vous</h2>
+<h2>Inscrivez-vous</h2>
 
 {% if form.errors %}
     <p class="alert">Les éléments entrés ne sont pas valables. Veuillez réessayer.</p>
@@ -12,7 +12,7 @@
     <table>
         {{form.as_table}}
     </table>
-    <a href="">Retourner</a>
-    <input type="submit" value="S'inscrire">
+    <input type="button" value="Retourner" class="link-button">
+    <input type="submit" value="S'inscrire"  class="link-button">
 </form>
 {% endblock %}

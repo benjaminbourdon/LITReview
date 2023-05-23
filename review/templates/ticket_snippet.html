@@ -1,0 +1,29 @@
+<article class="post ticket">
+    <header class="post__info">
+        <span class="post__author">
+            {% if post.user == user %} Vous avez demandé une critique
+            {% else %} {{post.user}} a demandé une critique
+            {% endif %}
+        </span>
+        <span class="post__date">
+            {{ post.time_created|date:"G:i d F Y" }}
+        </span>
+    </header>
+    <h1 class="post__title">{{post.title}}</h1>
+    {% if post.description and post.description is not None %}
+        <p class="post__body">
+            {{post.description}}
+        </p>
+    {% endif %}
+    <p class="post__footer">
+        {% if post.review__count == 0 %}
+                <a href="{% url 'review_for_ticket' ticket_id=post.id %}" class="link-button" >
+                    Créer une critique</a>
+        {% endif %}
+        {% if edit %}
+                <a href="{% url 'modify_ticket' pk=post.id  %}" class="link-button">Modifier</a>
+                <a href="{% url 'delete_ticket' pk=post.id %}" class="link-button">Supprimer</a>
+        {% endif %}
+    </p>
+</article>
+    

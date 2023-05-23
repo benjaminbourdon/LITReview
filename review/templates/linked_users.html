@@ -6,37 +6,35 @@
 
 {% block content %}
 <h2>Suivre d'autres utilisateurs</h2>
-<form action="" method="post">
+<form class="inline-form" action="" method="post">
     {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
+    {{ form.as_div }}
     <input type="submit" value="Envoyer">
 </form>
 
 <h2>Abonnements</h2>
     {% if following %}
-    <ul>
+    <table class="list_user">
         {% for user in following %}
-            <li>
-                {{user}} 
-                <a href="{% url 'unfollow' id=user.id %}">Se désabonner</a>
-            </li>
+            <tr>
+                <td>{{user}}</td>
+                <td><a href="{% url 'unfollow' id=user.id %}">Se désabonner</a></td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
     {% else %}
         <p>Vous ne suivez pas d'utilisateurs pour le moment.</p>
     {% endif %}
 
 <h2>Abonnés</h2>
     {% if followed_by %}
-    <ul>
+    <table class="list_user">
         {% for user in followed_by %}
-            <li>
-                {{user.get_full_name}} 
-            </li>
+            <tr>
+                <td>{{user}}</td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
     {% else %}
         <p>Aucun utilisateurs ne vous suit pour le moment.</p>
     {% endif %}

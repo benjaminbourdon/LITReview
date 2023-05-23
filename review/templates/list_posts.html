@@ -7,23 +7,13 @@
 {% block content %}
     <h2>{{title}}</h2>
     {% if object_list %}
-    <ul>
         {% for post in object_list %}
             {% if post.content_type == "REVIEW" %} 
-            <li>
-                Critique : {{post.headline}}
-                <a href="{% url 'modify_review' pk=post.id %}">Modifier</a>
-                <a href="{% url 'delete_review' pk=post.id %}">Supprimer</a>
-            </li>
+                {% include "review_snippet.html" with edit=True %}
             {% elif post.content_type == "TICKET" %}
-            <li>
-                Ticket: {{post.title}} 
-                <a href="{% url 'modify_ticket' pk=post.id %}">Modifier</a>
-                <a href="{% url 'delete_ticket' pk=post.id %}">Supprimer</a>
-            </li>
+                {% include "ticket_snippet.html" with edit=True %}
             {% endif %}
         {% endfor %}
-    </ul>
     {% else %}
         <p>Vous n'avez pas de ticket ou de critique publié.</p>
     {% endif %}
