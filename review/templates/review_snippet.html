@@ -23,8 +23,8 @@
     </p>
     <div class="post ticket">
         <p class ="post__info">Ticket - 
-            {% if post.user == user %} Vous
-            {% else %} {{post.user}}
+            {% if post.ticket.user == user %} Vous
+            {% else %} {{post.ticket.user}}
             {% endif %}
         </p>
         <h1>{{post.ticket.title}}</h1>

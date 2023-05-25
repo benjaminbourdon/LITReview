@@ -14,7 +14,8 @@ urlpatterns = [
         views.ReviewCreateFromTicket.as_view(),
         name="review_for_ticket",
     ),
-    path("critiques", views.ReviewCreateWithNewTicket.as_view(), name="fresh_review"),
+    # path("critiques", views.ReviewCreateWithNewTicket.as_view(), name="fresh_review"),
+    path("critiques", views.review_and_ticket_create, name="fresh_review"),
     path("critiques/<int:pk>/edit", views.ReviewUpdate.as_view(), name="modify_review"),
     path("critiques/<int:pk>/supprimer", views.delete_review, name="delete_review"),
 ]

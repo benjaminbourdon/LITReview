@@ -15,7 +15,7 @@
         {% include "ticket_snippet.html" with post=ticket edit=False %}
     </div>
     {% elif ticket_form %}
-    <div>
+    <div class="form__body">
         {{ ticket_form.as_div }}
     </div>
     {% endif %}

@@ -9,7 +9,7 @@ from review.models import Ticket
 
 class TicketUpdate(LoginRequiredMixin, UserPassesTestMixin, generic.edit.UpdateView):
     model = Ticket
-    fields = ["title", "description"]
+    fields = ["title", "description", "image"]
     success_url = reverse_lazy("my_posts")
 
     title = "Modifier votre ticket"

@@ -1,6 +1,9 @@
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils.text import slugify
+
+from review.utils import image_upload_path
 
 
 class Ticket(models.Model):
@@ -9,7 +12,9 @@ class Ticket(models.Model):
         max_length=2048, blank=True, verbose_name="description"
     )
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(null=True, blank=True, verbose_name="image")
+    image = models.ImageField(
+        null=True, blank=True, verbose_name="image", upload_to=image_upload_path
+    )
     time_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
@@ -19,9 +24,6 @@ class Ticket(models.Model):
         return f"{self.user.username} <{self.user.email}>"
 
     user_resume.short_description = "User"
-
-    # def get_absolute_url(self):
-    # return reverse("model-detail-view", args=[str(self.id)])
 
     class Meta:
         ordering = ["-time_created"]

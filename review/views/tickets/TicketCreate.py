@@ -9,7 +9,7 @@ from review.models import Ticket
 
 class TicketCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = Ticket
-    fields = ["title", "description"]
+    fields = ["title", "description", "image"]
     success_url = reverse_lazy("my_posts")
 
     title = "Créer un ticket"
