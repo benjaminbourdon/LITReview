@@ -1,5 +1,4 @@
 from .ReviewCreateFromTicket import ReviewCreateFromTicket
-from .ReviewCreateWithNewTicket import ReviewCreateWithNewTicket
 from .ReviewUpdate import ReviewUpdate
 from .delete_review import delete_review
 from .review_and_ticket_create import review_and_ticket_create

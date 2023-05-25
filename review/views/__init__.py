@@ -5,7 +5,6 @@ from .unfollow_user import unfollow_user
 from .tickets import TicketCreate, TicketUpdate, delete_ticket
 from .reviews import (
     ReviewCreateFromTicket,
-    ReviewCreateWithNewTicket,
     ReviewUpdate,
     delete_review,
     review_and_ticket_create,
