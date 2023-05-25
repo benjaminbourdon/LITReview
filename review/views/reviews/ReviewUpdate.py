@@ -5,11 +5,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 
 from review.models import Review
+from review.forms import ReviewForm
 
 
 class ReviewUpdate(LoginRequiredMixin, UserPassesTestMixin, generic.edit.UpdateView):
     model = Review
-    fields = ["headline", "body", "rating"]
+    form_class = ReviewForm
     success_url = reverse_lazy("my_posts")
 
     title = "Modifier votre critique"

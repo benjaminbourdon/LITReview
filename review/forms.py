@@ -24,13 +24,21 @@ class FollowsUserForm(forms.Form):
         self.fields["user_to_follow"].queryset = queryset
 
 
-class TicketCreateForm(forms.ModelForm):
+class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
         fields = ["title", "description", "image"]
+        widgets = {"image": forms.ClearableFileInput(attrs={"class": "link-button"})}
 
 
-class ReviewCreateForm(forms.ModelForm):
+class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ["headline", "body", "rating"]
+        fields = ["headline", "rating", "body"]
+        widgets = {
+            "body": forms.Textarea(),
+            "rating": forms.RadioSelect(
+                attrs={"class": "input_rate"},
+                choices=[(i, f" - {str(i)}") for i in range(0, 5 + 1)],
+            ),
+        }

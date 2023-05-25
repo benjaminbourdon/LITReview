@@ -5,11 +5,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 
 from review.models import Ticket
+from review.forms import TicketForm
 
 
 class TicketUpdate(LoginRequiredMixin, UserPassesTestMixin, generic.edit.UpdateView):
     model = Ticket
-    fields = ["title", "description", "image"]
+    form_class = TicketForm
     success_url = reverse_lazy("my_posts")
 
     title = "Modifier votre ticket"

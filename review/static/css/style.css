@@ -181,6 +181,17 @@ main h2 {
     border: black 2px solid;
 }
 
+.input_rate
+{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 35px;
+}
+
+.input_rate input {
+    display: inline-block;
+}
+
 .form__header {
     border-bottom: black 2px solid;
     padding: 0px 20px;
@@ -201,6 +212,6 @@ main h2 {
     margin: 20px 0px;
 }
 
-.form__body input, .form__body textarea {
+.form__body input[type="text"], .form__body textarea {
     width: 100%;
 }

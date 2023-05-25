@@ -6,15 +6,15 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from review.forms import ReviewCreateForm, TicketCreateForm
+from review.forms import ReviewForm, TicketForm
 
 
 @login_required
 @transaction.atomic
 def review_and_ticket_create(request):
     if request.method == "POST":
-        ticket_form = TicketCreateForm(request.POST)
-        review_form = ReviewCreateForm(request.POST)
+        ticket_form = TicketForm(request.POST)
+        review_form = ReviewForm(request.POST)
         if ticket_form.is_valid() and review_form.is_valid():
             ticket_form.instance.user = request.user
             ticket_form.full_clean()
@@ -27,8 +27,8 @@ def review_and_ticket_create(request):
             review_form.save()
             return HttpResponseRedirect(reverse("my_posts"))
     else:
-        ticket_form = TicketCreateForm()
-        review_form = ReviewCreateForm()
+        ticket_form = TicketForm()
+        review_form = ReviewForm()
     return render(
         request,
         "review/review_form.html",

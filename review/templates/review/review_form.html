@@ -15,6 +15,7 @@
         {% include "ticket_snippet.html" with post=ticket edit=False %}
     </div>
     {% elif ticket_form %}
+    <h3>Livre / Article</h3>
     <div class="form__body">
         {{ ticket_form.as_div }}
     </div>

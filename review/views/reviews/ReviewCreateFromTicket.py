@@ -7,13 +7,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 
 from review.models import Review, Ticket
+from review.forms import ReviewForm
 
 
 class ReviewCreateFromTicket(
     LoginRequiredMixin, UserPassesTestMixin, generic.edit.CreateView
 ):
-    model = Review
-    fields = ["headline", "body", "rating"]
+    form_class = ReviewForm
+    template_name = "review/review_form.html"
     success_url = reverse_lazy("my_posts")
 
     title = "Créer une critique"
