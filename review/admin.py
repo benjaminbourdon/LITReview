@@ -5,7 +5,7 @@ from review.models import Ticket, Review, UserFollows
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "user_resume", "time_created")
+    list_display = ("id", "title", "user", "time_created")
     list_filter = ("user", "time_created")
 
 

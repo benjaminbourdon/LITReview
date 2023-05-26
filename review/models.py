@@ -27,11 +27,6 @@ class Ticket(models.Model):
     def __str__(self) -> str:
         return f"#{self.id} {self.title}"
 
-    def user_resume(self):
-        return f"{self.user.username} <{self.user.email}>"
-
-    user_resume.short_description = "User"
-
     class Meta:
         ordering = ["-time_created"]
 
