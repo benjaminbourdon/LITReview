@@ -1,9 +1,12 @@
 from django.conf import settings
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import (
+    MaxValueValidator,
+    MinValueValidator,
+)
 from django.db import models
-from django.utils.text import slugify
 
 from review.utils import image_upload_path
+from review.validators import validate_image_size
 
 
 class Ticket(models.Model):
@@ -13,7 +16,11 @@ class Ticket(models.Model):
     )
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(
-        null=True, blank=True, verbose_name="image", upload_to=image_upload_path
+        null=True,
+        blank=True,
+        verbose_name="image",
+        upload_to=image_upload_path,
+        validators=[validate_image_size],
     )
     time_created = models.DateTimeField(auto_now_add=True)
 

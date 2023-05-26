@@ -25,10 +25,13 @@ class FollowsUserForm(forms.Form):
 
 
 class TicketForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["image"].widget.attrs.update({"class": "link-button"})
+
     class Meta:
         model = Ticket
         fields = ["title", "description", "image"]
-        widgets = {"image": forms.ClearableFileInput(attrs={"class": "link-button"})}
 
 
 class ReviewForm(forms.ModelForm):
