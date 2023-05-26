@@ -84,8 +84,7 @@ main h2 {
     font-size: inherit ;
     background-color: white;
     font-size: medium;
-    vertical-align: baseline;
-    min-height: max(35px,100%);
+    vertical-align: bottom;
 }
 
 
@@ -137,6 +136,7 @@ main h2 {
 
 .post__footer {
     text-align: right;
+    height: 50px;
 }
 
 /* Page abonnement */
@@ -212,6 +212,10 @@ main h2 {
     margin: 20px 0px;
 }
 
-.form__body input[type="text"], .form__body textarea {
+.form__body input[type="text"], .form__body input[type="password"], .form__body textarea {
     width: 100%;
+}
+
+.form__body .helptext {
+    display: none;
 }

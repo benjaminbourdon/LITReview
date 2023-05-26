@@ -9,10 +9,12 @@
 
 <form method="post" action="">
     {% csrf_token %}
-    <table>
-        {{form.as_table}}
-    </table>
-    <input type="button" value="Retourner" class="link-button">
-    <input type="submit" value="S'inscrire"  class="link-button">
+    <div class="form__body">
+        {{form.as_div}}
+    </div>
+    <div class="form__footer">
+        <a href="" class="link-button" style="height: 35px;">Retourner</a>
+        <input type="submit" value="S'inscrire"  class="link-button"  style="height: 35px;">    
+    </div>
 </form>
 {% endblock %}
