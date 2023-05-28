@@ -152,6 +152,18 @@ main h2 {
     text-align: center;
 }
 
+.inline-form select {
+    width: calc(100% - 40px);
+    text-align: center;
+    background-color: white;
+    border: black 2px solid;
+    padding: 8px;
+}
+
+.inline-form option[value=""] {
+    color: gray;
+}
+
 .list_user {
     width: 100%;
     border-collapse: collapse;
