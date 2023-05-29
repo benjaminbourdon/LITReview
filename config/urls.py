@@ -22,6 +22,7 @@ from django.urls import include, path
 import core_views
 
 urlpatterns = [
+    path("", core_views.home),
     path("admin/", admin.site.urls),
     path("review/", include("review.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
