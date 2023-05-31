@@ -61,5 +61,5 @@ Le projet suit la structure standard du framework Django.
     - **media/** : répertoire où sont stockés les médias, notamment les images
     - **static/** : répertoire pour les fichiers statiques (CSS, etc.)
     - **templates/** : répertoires pour les templates HTML non liés à une application spécifiques
-    - **core_views.py** : *views* utilisés par le projets, non liés à un projet spécifique
+    - **core_views.py** : *views* utilisés par le projets, non liés à une application spécifique
     - **manage.py** : point d'entrée pour les commandes de gestion Django
